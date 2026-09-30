@@ -6,16 +6,11 @@ namespace Entities
     public abstract class Entity : MonoBehaviour
     {
         // ---- EXISTING FIELDS (kept as-is, now backed by serializable properties) ----
-        [SerializeField] private int _hp = 10;
-        [SerializeField] private string _name = "Entity";
-        [SerializeField] private Image _sprite;
-        [SerializeField] private Image _uiImage;
+        [SerializeField] protected int _hp = 10;
+        [SerializeField] protected string _name = "Entity";
         [SerializeField] private Collider2D _collider;
         [SerializeField] private Rigidbody2D _rb;
-
-        // [NEW] Public accessors so derived classes and GameManager can read HP.
-        public int Hp => _hp;
-        public string Name => _name;
+        
         public bool IsAlive => _hp > 0;
 
         // ---- EXISTING METHODS (implemented) ----

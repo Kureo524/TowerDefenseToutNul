@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Entities
 {
-    public abstract class Enemy : MonoBehaviour
+    public abstract class Enemy : Entity
     {
         // ---- Static registry (members folded into Enemy — no separate class) ----
         private static readonly List<Enemy> _all = new List<Enemy>();
@@ -37,16 +37,12 @@ namespace Entities
         }
 
         // ---- Instance fields (protected so children access without re-declaring) ----
-        [SerializeField] protected int _hp = 10;
-
         [SerializeField] protected float _attackDistance = 0.5f;
         [SerializeField] protected int _damage = 5;
         [SerializeField] protected float _speed = 1.0f;
         [SerializeField] protected float _attackRate = 1.0f;
 
-        public int Hp => _hp;
         public bool IsAlive => _hp > 0;
-        public int Damage => _damage;
 
         public void Attack(Building target)
         {
@@ -54,32 +50,15 @@ namespace Entities
             target.TakeDamage(_damage);
         }
 
-        public virtual void TakeDamage(int dmg)
-        {
-            if (dmg <= 0) return;
-            _hp -= dmg;
-            if (_hp <= 0)
-            {
-                _hp = 0;
-                Die();
-            }
-        }
-
-        public virtual void HealDamage(int dmg)
-        {
-            if (dmg <= 0) return;
-            _hp += dmg;
-        }
-
         // [NEW] Children override this to set their own max HP.
         //         Called by children in Start() to initialize HP.
         protected virtual int MaxHp => 10;
 
-        public virtual void Die()
+        public override void Die()
         {
             NotifyKilled(this);
             Remove(this);
-            gameObject.SetActive(false);
+            base.Die();
         }
 
         // [NEW] Children call this in Start() to batch-set their stats

@@ -76,16 +76,6 @@ namespace Buildings
         public override void Start()
         {
             base.Start();
-            // [NEW] Create detection zone collider if not assigned
-            if (_enemyDetectionZone == null)
-            {
-                GameObject zoneObj = new GameObject("DetectionZone");
-                zoneObj.transform.SetParent(transform);
-                zoneObj.transform.localPosition = Vector3.zero;
-                _enemyDetectionZone = zoneObj.AddComponent<CircleCollider2D>();
-                _enemyDetectionZone.radius = _detectionRadius;
-                _enemyDetectionZone.isTrigger = true;
-            }
         }
 
         // [NEW] OnTrigger kept from original skeleton

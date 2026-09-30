@@ -7,7 +7,7 @@ namespace Entities
         // Override MaxHp instead of re-declaring _hp.
         protected override int MaxHp => 20;
 
-        protected override void Start()
+        public override void Start()
         {
             // Use inherited protected fields directly — no need to re-declare them.
             _attackDistance = 0.5f;
